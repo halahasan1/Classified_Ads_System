@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Jobs\SendWelcomeEmail;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
@@ -17,6 +18,10 @@ class AuthService
             'email'    => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
+
+        if ($user->wasRecentlyCreated) {
+            SendWelcomeEmail::dispatch($user);
+        }
 
         return $user;
     }

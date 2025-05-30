@@ -50,7 +50,7 @@ class Ad extends Model
         return number_format($this->price, 2) . ' $';
     }
 
-    // Mutators 
+    // Mutators
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = strtolower($value);
@@ -70,7 +70,7 @@ class Ad extends Model
     public function scopeWithMainImage($query)
     {
         return $query->with(['images' => function ($q) {
-            $q->ofMany('id', 'min');
+            $q->orderBy('id', 'asc')->limit(1);
         }]);
     }
 

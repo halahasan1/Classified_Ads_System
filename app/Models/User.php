@@ -58,10 +58,13 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    public function profile()
+    public function image()
     {
-        return $this->hasOne(Profile::class);
+        return $this->morphOne(Image::class, 'imageable');
     }
 
-
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
 }
